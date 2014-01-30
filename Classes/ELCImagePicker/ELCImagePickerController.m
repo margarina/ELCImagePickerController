@@ -17,7 +17,7 @@
 
 //Using auto synthesizers
 
-- (id)initImagePicker
+- (id)init
 {
     ELCAlbumPickerController *albumPicker = [[ELCAlbumPickerController alloc] initWithStyle:UITableViewStylePlain];
     
@@ -48,14 +48,13 @@
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset previousCount:(NSUInteger)previousCount
 {
     BOOL shouldSelect = previousCount < self.maximumImagesCount;
-    if (!shouldSelect) {
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Only %d photos please!", nil), self.maximumImagesCount];
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"You can only send %d photos at a time.", nil), self.maximumImagesCount];
-        [[[UIAlertView alloc] initWithTitle:title
-                                    message:message
+    if (!shouldSelect)
+    {
+        [[[UIAlertView alloc] initWithTitle:@""
+                                    message:BCLocalizedString(@"STR_MAX_PHOTOS")
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:NSLocalizedString(@"Okay", nil), nil] show];
+                          otherButtonTitles:BCLocalizedString(@"STR_OK"), nil] show];
     }
     return shouldSelect;
 }
@@ -78,29 +77,18 @@
         
         [workingDictionary setObject:obj forKey:UIImagePickerControllerMediaType];
 
-        //This method returns nil for assets from a shared photo stream that are not yet available locally. If the asset becomes available in the future, an ALAssetsLibraryChangedNotification notification is posted.
+        //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
+        //so use UIImageOrientationUp when creating our image below.
         ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-
-        if(assetRep != nil) {
-            CGImageRef imgRef = nil;
-            //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
-            //so use UIImageOrientationUp when creating our image below.
-            UIImageOrientation orientation = UIImageOrientationUp;
-            
-            if (_returnsOriginalImage) {
-                imgRef = [assetRep fullResolutionImage];
-                orientation = [assetRep orientation];
-            } else {
-                imgRef = [assetRep fullScreenImage];
-            }
-            UIImage *img = [UIImage imageWithCGImage:imgRef
-                                               scale:1.0f
-                                         orientation:orientation];
-            [workingDictionary setObject:img forKey:UIImagePickerControllerOriginalImage];
-            [workingDictionary setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:UIImagePickerControllerReferenceURL];
-            
-            [returnArray addObject:workingDictionary];
-        }
+        
+        CGImageRef imgRef = [assetRep fullScreenImage];
+        UIImage *img = [UIImage imageWithCGImage:imgRef
+                                           scale:1.0f
+                                     orientation:UIImageOrientationUp];
+        [workingDictionary setObject:img forKey:UIImagePickerControllerOriginalImage];
+		[workingDictionary setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:UIImagePickerControllerReferenceURL];
+		
+		[returnArray addObject:workingDictionary];
 		
 	}    
 	if (_imagePickerDelegate != nil && [_imagePickerDelegate respondsToSelector:@selector(elcImagePickerController:didFinishPickingMediaWithInfo:)]) {

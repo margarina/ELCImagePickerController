@@ -41,10 +41,11 @@
 	
     if (self.immediateReturn) {
         
-    } else {
-        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+    } else {        
+        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithTitle:BCLocalizedString(@"STR_DONE") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+        [doneButtonItem setTintColor:[UIColor doneBarButtonBlueColor]];
         [self.navigationItem setRightBarButtonItem:doneButtonItem];
-        [self.navigationItem setTitle:@"Loading..."];
+        [self.navigationItem setTitle:BCLocalizedString(@"STR_LOADING")];
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
@@ -107,7 +108,7 @@
                                                       animated:NO];
             }
             
-            [self.navigationItem setTitle:self.singleSelection ? @"Pick Photo" : @"Pick Photos"];
+            [self.navigationItem setTitle:self.singleSelection ? BCLocalizedString(@"STR_PICK_PHOTO") : BCLocalizedString(@"STR_PICK_PHOTOS")];
         });
     }
 }
@@ -134,7 +135,7 @@
     BOOL shouldSelect = YES;
     if ([self.parent respondsToSelector:@selector(shouldSelectAsset:previousCount:)]) {
         shouldSelect = [self.parent shouldSelectAsset:asset previousCount:selectionCount];
-    }
+    }    
     return shouldSelect;
 }
 

@@ -26,9 +26,9 @@
 {
     [super viewDidLoad];
 	
-	[self.navigationItem setTitle:@"Loading..."];
+	[self.navigationItem setTitle:BCLocalizedString(@"STR_LOADING")];
 
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:BCLocalizedString(@"STR_CANCEL") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
 	[self.navigationItem setRightBarButtonItem:cancelButton];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
@@ -67,7 +67,11 @@
             // Group Enumerator Failure Block
             void (^assetGroupEnumberatorFailure)(NSError *) = ^(NSError *error) {
                 
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Album Error: %@ - %@", [error localizedDescription], [error localizedRecoverySuggestion]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:BCLocalizedString(@"STR_ERROR")
+                                                                 message:[NSString stringWithFormat:@"%@ - %@", [error localizedDescription], [error localizedRecoverySuggestion]]
+                                                                delegate:nil
+                                                       cancelButtonTitle:BCLocalizedString(@"STR_OK")
+                                                       otherButtonTitles:nil];
                 [alert show];
                 
                 NSLog(@"A problem occured %@", [error description]);	                                 
@@ -85,7 +89,7 @@
 - (void)reloadTableView
 {
 	[self.tableView reloadData];
-	[self.navigationItem setTitle:@"Select an Album"];
+	[self.navigationItem setTitle:BCLocalizedString(@"STR_PHOTO_ALBUMS")];
 }
 
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset previousCount:(NSUInteger)previousCount
@@ -133,6 +137,10 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
     [cell.imageView setImage:[UIImage imageWithCGImage:[(ALAssetsGroup*)[self.assetGroups objectAtIndex:indexPath.row] posterImage]]];
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
+    UIView* selection = [UIView new];
+    selection.backgroundColor = [UIColor businessConnectColor];
+    cell.selectedBackgroundView = selection;
 	
     return cell;
 }
