@@ -8,6 +8,7 @@
 #import "ELCAlbumPickerController.h"
 #import "ELCImagePickerController.h"
 #import "ELCAssetTablePicker.h"
+#import "../../../../Social/Helpers/Extensions/UIElements+BCSocial.h"
 
 @interface ELCAlbumPickerController ()
 
