@@ -9,6 +9,8 @@
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
+#import "../../../../Social/Helpers/Extensions/UIElements+BCSocial.h"
+#import "../../../../Social/Localization/Infrastructure/BCLocalization.h"
 
 @interface ELCAssetTablePicker ()
 
