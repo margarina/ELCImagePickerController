@@ -12,6 +12,7 @@
 #import "ELCAssetTablePicker.h"
 #import "ELCAlbumPickerController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "../../../../Social/Localization/Infrastructure/BCLocalization.h"
 
 @implementation ELCImagePickerController
 
