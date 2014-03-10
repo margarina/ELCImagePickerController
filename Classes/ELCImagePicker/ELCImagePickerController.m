@@ -21,6 +21,8 @@
 - (id)init
 {
     ELCAlbumPickerController *albumPicker = [[ELCAlbumPickerController alloc] initWithStyle:UITableViewStylePlain];
+    albumPicker.tableView.showsVerticalScrollIndicator = NO;
+    albumPicker.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self = [super initWithRootViewController:albumPicker];
     if (self) {
