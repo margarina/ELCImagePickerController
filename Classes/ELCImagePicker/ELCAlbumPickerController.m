@@ -141,7 +141,7 @@
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     UIView* selection = [UIView new];
-    selection.backgroundColor = [UIColor businessConnectColor];
+    selection.backgroundColor = [UIColor defaultBackgroundColor];
     cell.selectedBackgroundView = selection;
 	
     return cell;
