@@ -11,6 +11,8 @@
 #import "../../../../Social/Helpers/Extensions/UIElements+BCSocial.h"
 #import "../../../../Social/Localization/Infrastructure/BCLocalization.h"
 
+#define iOS7 (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1)
+
 @interface ELCAlbumPickerController ()
 
 @property (nonatomic, strong) ALAssetsLibrary *library;
@@ -141,7 +143,7 @@
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     UIView* selection = [UIView new];
-    selection.backgroundColor = [UIColor defaultBackgroundColor];
+    selection.backgroundColor = iOS7 ? [UIColor defaultBackgroundColor] : [UIColor businessConnectColor];
     cell.selectedBackgroundView = selection;
 	
     return cell;
