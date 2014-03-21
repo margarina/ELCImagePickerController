@@ -33,7 +33,7 @@
 	[self.navigationItem setTitle:BCLocalizedString(@"STR_LOADING")];
 
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:BCLocalizedString(@"STR_CANCEL") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
-	[self.navigationItem setRightBarButtonItem:cancelButton];
+	[self.navigationItem setLeftBarButtonItem:cancelButton];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	self.assetGroups = tempArray;
